@@ -1,0 +1,38 @@
+# ========================================
+# Root level (common ignores)
+# ========================================
+
+.DS_Store
+.vscode/
+.idea/
+*.log
+.env
+.env.local
+
+# ========================================
+# Django Backend
+# ========================================
+
+backend/__pycache__/
+backend/venv/
+backend/env/
+backend/.venv/
+backend/db.sqlite3
+backend/media/
+backend/staticfiles/
+backend/*.log
+backend/migrations/__pycache__/
+
+# ========================================
+# Nuxt UI Frontend
+# ========================================
+
+frontend/.output/
+frontend/.nuxt/
+frontend/.nitro/
+frontend/.cache/
+frontend/dist/
+frontend/node_modules/
+frontend/auto-imports.d.ts
+frontend/components.d.ts
+frontend/.env
