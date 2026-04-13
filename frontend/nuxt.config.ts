@@ -27,6 +27,12 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  icon: {
+    customCollections: [{
+      prefix: 'custom',
+      dir: './public/Icons'
+    }]},
+
   ui: {
     theme: {
       colors: [

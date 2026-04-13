@@ -8,11 +8,11 @@
       <!-- Image with rounded corners and padding -->
       <div v-if="image" class="absolute inset-0 -z-10 flex items-center justify-center p-4">
         <div class="relative w-full h-full">
-          <div class="absolute inset-0 bg-black/50 rounded-2xl"></div>
+          <div class="absolute inset-0 bg-linear-to-r from-black/20 via-black/50 to-black/80 rounded-2xl"></div>
           <img
             :src="image"
             :alt="imageAlt"
-            class="w-full h-full object-cover rounded-2xl"
+            class="w-full h-full border object-cover rounded-2xl"
           />
         </div>
       </div>
