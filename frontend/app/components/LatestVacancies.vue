@@ -10,10 +10,10 @@
     <UContainer :ui="uiConfig">
       <!-- Header Section -->
       <div class="text-center mb-6">
-        <h2 class="text-3xl lg:text-4xl font-bold text-white mb-4">
+        <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
           {{ title }}
         </h2>
-        <p v-if="subtitle" class="text-lg text-gray-400 max-w-3xl mx-auto">
+        <p v-if="subtitle" class="text-lg text-gray-500 dark:text-gray-400 max-w-3xl mx-auto">
           {{ subtitle }}
         </p>
       </div>
@@ -23,19 +23,19 @@
         <UCard
           v-for="(vacancy, index) in vacancies"
           :key="index"
-          class="hover:border-green-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10"
+          class="bg-white/80 dark:bg-transparent backdrop-blur-sm ring-1 ring-gray-200 dark:ring-gray-800 hover:border-green-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10"
           :ui="{
-            base: 'h-full flex flex-col',
-            body: 'flex-1',
-            footer: 'pt-4'
+            root: 'h-full flex flex-col',
+            body: 'flex-1 p-4 sm:p-6',
+            footer: 'p-4 sm:px-6'
           }"
         >
           <!-- Vacancy Header -->
           <template #header>
             <div class="flex justify-between items-start">
               <div>
-                <h3 class="text-xl font-bold text-white mb-2">{{ vacancy.title }}</h3>
-                <div class="flex items-center gap-2 text-gray-400">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ vacancy.title }}</h3>
+                <div class="flex items-center gap-2 text-gray-500 dark:text-gray-400">
                   <UIcon name="i-lucide-building" class="h-4 w-4" />
                   <span>{{ vacancy.company }}</span>
                 </div>
@@ -54,25 +54,25 @@
           <!-- Vacancy Details -->
           <div class="space-y-3 mb-6">
             <!-- Location -->
-            <div class="flex items-center gap-2 text-gray-400">
+            <div class="flex items-center gap-2 text-gray-500 dark:text-gray-400">
               <UIcon name="i-lucide-map-pin" class="h-4 w-4" />
               <span>{{ vacancy.location }}</span>
             </div>
 
             <!-- Salary -->
-            <div class="flex items-center gap-2 text-green-400 font-semibold">
+            <div class="flex items-center gap-2 text-green-600 dark:text-green-400 font-semibold">
               <UIcon name="i-lucide-wallet" class="h-4 w-4" />
               <span>{{ vacancy.salary }}</span>
             </div>
 
             <!-- Employment Type -->
-            <div class="flex items-center gap-2 text-gray-400">
+            <div class="flex items-center gap-2 text-gray-500 dark:text-gray-400">
               <UIcon name="i-lucide-briefcase" class="h-4 w-4" />
               <span>{{ vacancy.employmentType }}</span>
             </div>
 
             <!-- Experience -->
-            <div class="flex items-center gap-2 text-gray-400">
+            <div class="flex items-center gap-2 text-gray-500 dark:text-gray-400">
               <UIcon name="i-lucide-award" class="h-4 w-4" />
               <span>Опыт: {{ vacancy.experience }}</span>
             </div>
@@ -98,14 +98,14 @@
                 label="Подробнее"
                 color="primary"
                 variant="solid"
-                class="flex-1"
+                class="bg-primary-500 text-gray-900 dark:text-white hover:bg-primary-600 flex-1"
                 :to="vacancy.detailsLink"
               />
               <UButton
                 label="Откликнуться"
                 color="green"
                 variant="outline"
-                class="flex-1"
+                class="bg-primary-500 text-gray-900 dark:text-white hover:bg-primary-600 flex-1"
                 @click="openApplicationForm(vacancy)"
               />
             </div>
@@ -119,8 +119,8 @@
         class="text-center py-12"
       >
         <UIcon name="i-lucide-search-x" class="h-16 w-16 text-gray-600 mx-auto mb-4" />
-        <h3 class="text-xl font-semibold text-gray-300 mb-2">Вакансии не найдены</h3>
-        <p class="text-gray-500">Попробуйте изменить параметры поиска</p>
+        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">Вакансии не найдены</h3>
+        <p class="text-gray-500 dark:text-gray-500">Попробуйте изменить параметры поиска</p>
       </div>
     </UContainer>
   </div>
@@ -134,24 +134,80 @@ import ApplicationForm from './ApplicationForm.vue'
 const isApplicationFormOpen = ref(false)
 const selectedVacancy = ref(null)
 
+const isSubmitting = ref(false)
+const submitStatus = ref(null) // null | 'success' | 'error'
+
 // Methods
 const openApplicationForm = (vacancy) => {
-  console.log('Opening application form for vacancy:', vacancy.title)
+  submitStatus.value = null
   selectedVacancy.value = vacancy
   isApplicationFormOpen.value = true
-  console.log('Modal state is now:', isApplicationFormOpen.value)
 }
 
 const closeApplicationForm = () => {
   isApplicationFormOpen.value = false
   selectedVacancy.value = null
+  submitStatus.value = null
 }
 
-const handleFormSubmit = (formData) => {
-  console.log('Form submitted for vacancy:', selectedVacancy.value?.title)
-  console.log('Form data:', formData)
-  // Here you would typically send the form data to your backend
-  closeApplicationForm()
+const handleFormSubmit = async (formData) => {
+  isSubmitting.value = true
+  submitStatus.value = null
+
+  try {
+    const data = new FormData()
+    data.append('vacancy_title', selectedVacancy.value?.title || '')
+
+    for (const [key, value] of Object.entries(formData)) {
+      if (value instanceof File || (Array.isArray(value) && value[0] instanceof File)) {
+        // Handle file uploads — UFileUpload returns an array of Files
+        const files = Array.isArray(value) ? value : [value]
+        for (const file of files) {
+          if (file instanceof File) {
+            data.append(key, file)
+          }
+        }
+      } else if (value !== null && value !== undefined) {
+        let fieldName = key
+          .replace(/([A-Z])/g, '_$1')
+          .toLowerCase()
+
+        // Handle special field mappings
+        const fieldMap = {
+          'last_name': 'last_name',
+          'first_name': 'first_name',
+          'middle_name': 'middle_name',
+          'birth_date': 'birth_date',
+          'registration_address': 'registration_address',
+          'residence_address': 'residence_address',
+          'municipal_experience': 'municipal_experience',
+          'work_experience': 'work_experience',
+          'marital_status': 'marital_status',
+          'vacancy_source': 'vacancy_source'
+        }
+        fieldName = fieldMap[fieldName] || fieldName
+
+        if (value instanceof Date) {
+          data.append(fieldName, value.toISOString().split('T')[0])
+        } else {
+          data.append(fieldName, value)
+        }
+      }
+    }
+
+    const response = await $fetch('http://localhost:8000/api/apply/', {
+      method: 'POST',
+      body: data
+    })
+
+    submitStatus.value = 'success'
+    setTimeout(() => closeApplicationForm(), 2000)
+  } catch (error) {
+    console.error('Server error:', error.data || error.message || error)
+    submitStatus.value = 'error'
+  } finally {
+    isSubmitting.value = false
+  }
 }
 
 // Props

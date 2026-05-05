@@ -44,7 +44,7 @@
 
   <!-- Деятельность -->
   <UContainer class="py-6 lg:py-12">
-    <UBlogPosts 
+    <UBlogPosts
       class="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6"
       :posts="posts"
     />
@@ -54,10 +54,10 @@
   <UContainer class="py-6 lg:py-12">
     <!-- Header -->
     <div class="max-w-2xl mb-6">
-      <h2 class="text-3xl lg:text-5xl font-bold text-white mb-4">
+      <h2 class="text-3xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
         Почему именно мы?
       </h2>
-      <p class="text-gray-400 text-lg">
+      <p class="text-gray-500 dark:text-gray-400 text-lg">
         Вот коротко почему именно мы
       </p>
     </div>
@@ -69,7 +69,7 @@
         :title="feature.title"
         :description="feature.description"
         :icon="feature.icon"
-        class="bg-gray-900/50 border-gray-800"
+        class="bg-white/60 dark:bg-gray-900/50 border-gray-200 dark:border-gray-800 backdrop-blur-sm"
       />
     </UPageGrid>
   </UContainer>
@@ -78,16 +78,28 @@
   <LatestVacancies
       title="Последние вакансии"
       subtitle="Актуальные предложения от работодателей"
-      :vacancies="vacanciesData"
+      :vacancies="latestVacancies"
     />
+
+    <div class="flex justify-center mt-6">
+      <UButton
+        class="bg-primary-500 text-gray-900 dark:text-white hover:bg-primary-600"
+        label="Все вакансии"
+        to="/vacancies"
+        color="primary"
+        variant="solid"
+        size="lg"
+        trailing-icon="i-lucide-arrow-right"
+      />
+    </div>
 
   <UContainer class="py-6 lg:py-12">
     <!-- Header -->
     <div class=" max-w-2xl mx-2 mb-2">
-      <h2 class="text-3xl lg:text-5xl font-bold text-white mb-4">
-        Часто Задаваемые <span class="text-green-500">Вопросы</span>
+      <h2 class="text-3xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+        Часто Задаваемые <span class="text-green-600 dark:text-green-400">Вопросы</span>
       </h2>
-      <p class="text-gray-400 text-lg">
+      <p class="text-gray-500 dark:text-gray-400 text-lg">
         Everything you need to know about our productivity platform.
       </p>
     </div>
@@ -97,9 +109,9 @@
         :items="FAQ_items"
         :ui="{
           wrapper: 'flex flex-col gap-4',
-          item: 'bg-gray-900/50 border border-gray-800 rounded-lg overflow-hidden mb-4',
-          header: 'px-4 py-2 text-white font-medium hover:bg-gray-800/50 transition',
-          body: 'px-6 py-2 text-gray-400',
+          item: 'bg-white/60 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden mb-4 backdrop-blur-sm',
+          header: 'px-4 py-2 text-gray-900 dark:text-white font-medium hover:bg-gray-100 dark:hover:bg-gray-800/50 transition',
+          body: 'px-6 py-2 text-gray-500 dark:text-gray-400',
           trailing: 'text-orange-500'
         }"
         multiple
@@ -110,30 +122,12 @@
 </template>
 
 <script setup>
-const vacanciesData = [
-  {
-    title: 'Frontend Developer (Vue.js/Nuxt)',
-    company: 'Отдел информационного развития',
-    location: 'Сургут, ул. Энергетиков, 22',
-    salary: 'от 150 000 ₽',
-    employmentType: 'Полная занятость',
-    experience: '1-3 года',
-    isNew: true,
-    skills: ['Vue.js', 'Nuxt', 'TypeScript', 'TailwindCSS'],
-    detailsLink: '/vacancies/1'
-  },
-  {
-    title: 'Frontend Developer (Vue.js/Nuxt)',
-    company: 'Отдел управления кадров и наград',
-    location: 'Сургут, ул. Энергетиков, 22',
-    salary: 'от 150 000 ₽',
-    employmentType: 'Полная занятость',
-    experience: '1-3 года',
-    isNew: true,
-    skills: ['Высшее образование', 'Работа с потенциальными сотрудниками'],
-    detailsLink: '/vacancies/2'
-  }
-]
+const { data: vacanciesData } = await useAsyncData('vacancies', () =>
+  $fetch('http://localhost:8000/api/vacancies/'), { server: false }
+)
+
+const latestVacancies = computed(() => (vacanciesData.value ?? []).slice(0, 3))
+
 const features = [
   {
     title: 'Стабильность занятости',

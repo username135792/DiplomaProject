@@ -2,7 +2,7 @@
   <div class="w-4/5 mx-auto py-20">
     <UPageCTA
       :ui="{
-        root: 'bg-gray-900/50 border border-gray-800 rounded-2xl relative overflow-visible',
+        root: 'bg-white/60 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 rounded-2xl relative overflow-visible backdrop-blur-sm',
         container: 'grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 -my-16 items-center py-6 lg:py-10',
         wrapper: 'col-span-2'
       }"
@@ -22,10 +22,10 @@
 
       <!-- Quote text - right two thirds (2/3) -->
       <template #description>
-        <p class="text-gray-300 text-lg lg:text-xl leading-relaxed italic">
+        <p class="text-gray-700 dark:text-gray-300 text-lg lg:text-xl leading-relaxed italic">
           "{{ quote }}"
         </p>
-        <p class="text-right text-gray-400 text-sm lg:text-base font-medium">
+        <p class="text-right text-gray-500 dark:text-gray-400 text-sm lg:text-base font-medium">
           {{ author }}
         </p>
       </template>

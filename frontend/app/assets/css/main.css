@@ -1,3 +1,43 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+/* Custom brand theme — green (#50C891) + blue (#2D2382) */
+@theme {
+  --color-primary-50: #91ffff;
+  --color-primary-100: #8afff9;
+  --color-primary-200: #7bffdf;
+  --color-primary-300: #6dffc5;
+  --color-primary-400: #5eecab;
+  --color-primary-500: #50c891;
+  --color-primary-600: #43a87a;
+  --color-primary-700: #368863;
+  --color-primary-800: #2a684b;
+  --color-primary-900: #1d4834;
+  --color-primary-950: #163829;
+
+  --color-secondary-50: #513feb;
+  --color-secondary-100: #4d3ce0;
+  --color-secondary-200: #4536c8;
+  --color-secondary-300: #3d30b1;
+  --color-secondary-400: #352999;
+  --color-secondary-500: #2d2382;
+  --color-secondary-600: #261d6d;
+  --color-secondary-700: #1f1858;
+  --color-secondary-800: #171244;
+  --color-secondary-900: #100d2f;
+  --color-secondary-950: #0d0a24;
+}
+
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  min-height: 100vh;
+  background: #f0f0f0;
+  color: #111827;
+}
+
+.dark body,
+.dark {
+  background: var(--color-secondary-800);
+  color: #ffffff;
+}
+

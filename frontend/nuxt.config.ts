@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
@@ -18,7 +17,7 @@ export default defineNuxtConfig({
   },
 
   fonts: {
-    provider: 'google' // or 'local', 'none'
+    provider: 'local' // or 'local', 'none'
   },
   
   devtools: {

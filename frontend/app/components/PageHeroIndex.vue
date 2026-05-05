@@ -2,26 +2,22 @@
 <template>
   <div class="flex-1">
     <UPageHero :ui="uiConfig">
-      <!-- Left content -->
+      <!-- Left content — all in one rounded rectangle -->
       <template #title>
-        <h1 class="text-2xl text-black dark:text-white font-bold">
-          {{ title }}
-        </h1>
-      </template>
-
-      <template #description>
-        <p class="text-lg text-gray-500 dark:text-gray-400 mt-4">
-          {{ description }}
-        </p>
-      </template>
-
-      <template #links>
-        <UButton 
-          :label="buttonLabel" 
-          :to="buttonLink"
-          color="primary" 
-          size="xl" 
-        />
+        <div class="bg-white/60 dark:bg-gray-900/50 rounded-2xl p-6 lg:p-8">
+          <h1 class="text-2xl text-black dark:text-white font-bold">
+            {{ title }}
+          </h1>
+          <p class="text-lg text-gray-500 dark:text-gray-400 mt-4">
+            {{ description }}
+          </p>
+          <UButton
+            :label="buttonLabel"
+            :to="buttonLink"
+            size="xl"
+            class="mt-6 bg-primary-500 text-gray-900 dark:text-white hover:bg-primary-600"
+          />
+        </div>
       </template>
 
       <!-- Right image -->

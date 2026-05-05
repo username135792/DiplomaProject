@@ -9,34 +9,13 @@
   <LatestVacancies
       title="Последние вакансии"
       subtitle="Актуальные предложения от работодателей"
-      :vacancies="vacanciesData"
+      :vacancies="vacanciesData ?? []"
     />
 
   </template>
 
 <script setup>
-const vacanciesData = [
-  {
-    title: 'Frontend Developer (Vue.js/Nuxt)',
-    company: 'Отдел информационного развития',
-    location: 'Сургут, ул. Энергетиков, 22',
-    salary: 'от 150 000 ₽',
-    employmentType: 'Полная занятость',
-    experience: '1-3 года',
-    isNew: true,
-    skills: ['Vue.js', 'Nuxt', 'TypeScript', 'TailwindCSS'],
-    detailsLink: '/vacancies/1'
-  },
-  {
-    title: 'Frontend Developer (Vue.js/Nuxt)',
-    company: 'Отдел управления кадров и наград',
-    location: 'Сургут, ул. Энергетиков, 22',
-    salary: 'от 150 000 ₽',
-    employmentType: 'Полная занятость',
-    experience: '1-3 года',
-    isNew: true,
-    skills: ['Высшее образование', 'Работа с потенциальными сотрудниками'],
-    detailsLink: '/vacancies/2'
-  }
-]
+const { data: vacanciesData } = await useAsyncData('vacancies-page', () =>
+  $fetch('http://localhost:8000/api/vacancies/'), { server: false }
+)
 </script>
