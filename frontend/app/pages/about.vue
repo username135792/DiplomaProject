@@ -1,3 +1,9 @@
+<script setup>
+const { data: staffItems } = await useAsyncData('staff', () =>
+  $fetch('http://localhost:8000/api/staff/'), { server: false }
+)
+</script>
+
 <template>
   <PageHeroElse
     title="Наша команда"
@@ -10,6 +16,29 @@
     quote="Любой гражданин, который хотел бы стать муниципальным или госслужащим, должен понимать, что вступление в должность связано с жесткими антикоррупционными требованиями, с определенными ограничениями, которые человек обязан строго соблюдать"
     alt="Customer photo"
     author='Владимир Владимирович Путин'
+  />
+  <StaffCard
+    title="Наша команда"
+    subtitle="Познакомьтесь с нашими сотрудниками"
+    :items="staffItems ?? []"
+  />
+  <Button
+    label="Доска почета"                                                                                                              
+    to="/honorboard"
+    color="primary"                                                                                                                   
+    variant="solid"                                                                                                             
+    size="lg"
+    trailing-icon="i-lucide-arrow-right"
+    custom-class="flex justify-center mt-6 bg-primary-500 text-gray-900 dark:text-white hover:bg-primary-600"
+  />
+  <Button
+    label="Резерв"                                                                                                              
+    to="/staffreserve"
+    color="primary"                                                                                                                   
+    variant="solid"                                                                                                             
+    size="lg"
+    trailing-icon="i-lucide-arrow-right"
+    custom-class="flex justify-center mt-6 bg-primary-500 text-gray-900 dark:text-white hover:bg-primary-600"
   />
   <NewsPageList
     title="Latest News"

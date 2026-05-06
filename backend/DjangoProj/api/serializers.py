@@ -1,5 +1,21 @@
 from rest_framework import serializers
-from .models import Vacancy, JobApplication
+from .models import StaffMember, Vacancy, JobApplication
+
+
+class StaffMemberSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = StaffMember
+        fields = ['name', 'role', 'description', 'image']
+
+    def get_image(self, obj):
+        if obj.image:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.image.url)
+            return obj.image.url
+        return None
 
 
 class VacancySerializer(serializers.ModelSerializer):

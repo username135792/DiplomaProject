@@ -3,13 +3,20 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import Vacancy
-from .serializers import VacancySerializer, JobApplicationSerializer
+from .models import Vacancy, StaffMember
+from .serializers import VacancySerializer, StaffMemberSerializer, JobApplicationSerializer
 
 
 @api_view(['GET'])
 def hello(request):
     return Response({"message": "Hello from Django!"})
+
+
+@api_view(['GET'])
+def staff_members(request):
+    items = StaffMember.objects.filter(is_active=True)
+    serializer = StaffMemberSerializer(items, many=True, context={'request': request})
+    return Response(serializer.data)
 
 
 @api_view(['GET'])

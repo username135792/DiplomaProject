@@ -81,17 +81,15 @@
       :vacancies="latestVacancies"
     />
 
-    <div class="flex justify-center mt-6">
-      <UButton
-        class="bg-primary-500 text-gray-900 dark:text-white hover:bg-primary-600"
-        label="Все вакансии"
-        to="/vacancies"
-        color="primary"
-        variant="solid"
-        size="lg"
-        trailing-icon="i-lucide-arrow-right"
-      />
-    </div>
+    <Button
+      label="Доска почета"
+      to="/vacancies"
+      color="primary"
+      variant="solid"
+      size="lg"
+      trailing-icon="i-lucide-arrow-right"
+      custom-class="flex justify-center mt-6 bg-primary-500 text-gray-900 dark:text-white hover:bg-primary-600"
+    />
 
   <UContainer class="py-6 lg:py-12">
     <!-- Header -->

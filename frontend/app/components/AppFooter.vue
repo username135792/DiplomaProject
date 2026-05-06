@@ -25,7 +25,7 @@ const columns: FooterColumn[] = [
     label: 'Документы',
     children: [
       { label: 'Политика конфиденциальности', to: '/privacy' },
-      { label: 'Пользовательское соглашение', to: '/terms' },
+      { label: 'Анти-коррупционная политика', to: '/anti-corruption' },
       { label: 'Обработка персональных данных', to: '/data-processing' }
     ]
   }

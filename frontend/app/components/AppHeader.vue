@@ -1,13 +1,3 @@
-<script setup lang="ts">
-const items = [
-  { label: 'Главная', to: '/' },
-  { label: 'О нас', to: '/about' },
-  { label: 'Вакансии', to: '/vacancies' },
-  { label: 'Новости', to: '/news' },
-  { label: 'Контакты', to: '/contacts' }
-]
-</script>
-
 <template>
   <UHeader>
     <!-- LEFT: Logo + Company Name -->
@@ -57,3 +47,13 @@ const items = [
     </template>
   </UHeader>
 </template>
+
+<script setup lang="ts">
+const items = [
+  { label: 'Главная', to: '/' },
+  { label: 'О нас', to: '/about' },
+  { label: 'Вакансии', to: '/vacancies' },
+  { label: 'Новости', to: '/news' },
+  { label: 'Контакты', to: '/contacts' }
+]
+</script>

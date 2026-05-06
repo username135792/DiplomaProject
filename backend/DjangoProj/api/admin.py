@@ -1,5 +1,13 @@
 from django.contrib import admin
-from .models import Vacancy, JobApplication
+from .models import StaffMember, Vacancy, JobApplication
+
+
+@admin.register(StaffMember)
+class StaffMemberAdmin(admin.ModelAdmin):
+    list_display = ['name', 'role', 'order', 'is_active']
+    list_filter = ['is_active']
+    search_fields = ['name', 'role']
+    list_editable = ['order', 'is_active']
 
 
 @admin.register(Vacancy)
