@@ -22,24 +22,28 @@ const { data: staffItems } = await useAsyncData('staff', () =>
     subtitle="Познакомьтесь с нашими сотрудниками"
     :items="staffItems ?? []"
   />
-  <Button
-    label="Доска почета"                                                                                                              
-    to="/honorboard"
-    color="primary"                                                                                                                   
-    variant="solid"                                                                                                             
-    size="lg"
-    trailing-icon="i-lucide-arrow-right"
-    custom-class="flex justify-center mt-6 bg-primary-500 text-gray-900 dark:text-white hover:bg-primary-600"
-  />
-  <Button
-    label="Резерв"                                                                                                              
-    to="/staffreserve"
-    color="primary"                                                                                                                   
-    variant="solid"                                                                                                             
-    size="lg"
-    trailing-icon="i-lucide-arrow-right"
-    custom-class="flex justify-center mt-6 bg-primary-500 text-gray-900 dark:text-white hover:bg-primary-600"
-  />
+  <div class="flex justify-center mt-6">
+    <Button
+      label="Доска почета"
+      to="/honorboard"
+      color="primary"
+      variant="solid"
+      size="lg"
+      trailing-icon="i-lucide-arrow-right"
+      class="bg-primary-500 text-gray-900 dark:text-white hover:bg-primary-600"
+    />
+  </div>
+  <div class="flex justify-center mt-6">
+    <Button
+      label="Резерв"
+      to="/staffreserve"
+      color="primary"
+      variant="solid"
+      size="lg"
+      trailing-icon="i-lucide-arrow-right"
+      class="bg-primary-500 text-gray-900 dark:text-white hover:bg-primary-600"
+    />
+  </div>
   <NewsPageList
     title="Latest News"
     subtitle="Stay updated with our latest announcements"

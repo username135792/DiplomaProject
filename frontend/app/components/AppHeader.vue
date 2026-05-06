@@ -20,13 +20,6 @@
 
     <!-- RIGHT: Action Button -->
     <template #right>
-      <UButton
-        label="Смотреть вакансии"
-        color="primary"
-        size="sm"
-        to="/vacancies"
-      />
-      
       <UColorModeButton class="ml-2" />
     </template>
 
@@ -54,6 +47,7 @@ const items = [
   { label: 'О нас', to: '/about' },
   { label: 'Вакансии', to: '/vacancies' },
   { label: 'Новости', to: '/news' },
-  { label: 'Контакты', to: '/contacts' }
+  { label: 'Контакты', to: '/contacts' },
+  { label: 'Конкурсы', to: '/tenders' }
 ]
 </script>

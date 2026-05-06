@@ -1,0 +1,2 @@
+open anaconda powershell
+type jupyter notebook

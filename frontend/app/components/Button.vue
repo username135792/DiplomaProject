@@ -5,7 +5,6 @@
     :color="color"
     :variant="variant"
     :size="size"
-    :class="customClass"
     :icon="icon"
     :trailing-icon="trailingIcon"
     :block="block"
@@ -36,10 +35,6 @@ defineProps({
   size: {
     type: String,
     default: 'md'
-  },
-  customClass: {
-    type: String,
-    default: ''
   },
   icon: {
     type: String,

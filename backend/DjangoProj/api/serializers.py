@@ -1,5 +1,21 @@
 from rest_framework import serializers
-from .models import StaffMember, Vacancy, JobApplication
+from .models import Tender, StaffMember, Vacancy, JobApplication
+
+
+class TenderSerializer(serializers.ModelSerializer):
+    link = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Tender
+        fields = ['id', 'category', 'name', 'link', 'created_at']
+
+    def get_link(self, obj):
+        if obj.link:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.link.url)
+            return obj.link.url
+        return None
 
 
 class StaffMemberSerializer(serializers.ModelSerializer):

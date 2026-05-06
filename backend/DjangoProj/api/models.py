@@ -1,6 +1,27 @@
 from django.db import models
 
 
+class Tender(models.Model):
+    CATEGORY_CHOICES = [
+        ('info', 'Информация о тендерах'),
+        ('results', 'Результаты тендеров'),
+        ('rules', 'Правила тендеров'),
+    ]
+
+    category = models.CharField('Категория', max_length=20, choices=CATEGORY_CHOICES)
+    name = models.CharField('Название', max_length=255)
+    link = models.FileField('Файл', upload_to='tenders/')
+    created_at = models.DateTimeField('Дата создания', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Тендер'
+        verbose_name_plural = 'Тендеры'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'[{self.get_category_display()}] {self.name}'
+
+
 class StaffMember(models.Model):
     name = models.CharField('Имя', max_length=255)
     role = models.CharField('Должность', max_length=255)

@@ -88,7 +88,7 @@
       variant="solid"
       size="lg"
       trailing-icon="i-lucide-arrow-right"
-      custom-class="flex justify-center mt-6 bg-primary-500 text-gray-900 dark:text-white hover:bg-primary-600"
+      class="flex justify-center mt-6 bg-primary-500 text-gray-900 dark:text-white hover:bg-primary-600"
     />
 
   <UContainer class="py-6 lg:py-12">

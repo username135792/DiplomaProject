@@ -1,5 +1,12 @@
 from django.contrib import admin
-from .models import StaffMember, Vacancy, JobApplication
+from .models import Tender, StaffMember, Vacancy, JobApplication
+
+
+@admin.register(Tender)
+class TenderAdmin(admin.ModelAdmin):
+    list_display = ['name', 'category', 'created_at']
+    list_filter = ['category']
+    search_fields = ['name']
 
 
 @admin.register(StaffMember)
