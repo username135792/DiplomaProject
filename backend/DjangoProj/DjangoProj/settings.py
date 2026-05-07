@@ -121,5 +121,5 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://your-project.vercel.app",
+    "https://diploma-project-k4pygafxg-vlads-projects-76ef279f.vercel.app",
 ]
