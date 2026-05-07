@@ -73,9 +73,7 @@
       />
     </UPageGrid>
   </UContainer>
-  <!-- FAQ -->
-
-  <LatestVacancies
+    <VacancyCards
       title="Последние вакансии"
       subtitle="Актуальные предложения от работодателей"
       :vacancies="latestVacancies"
@@ -120,12 +118,12 @@
 </template>
 
 <script setup>
+import VacancyCards from '~/components/VacancyCards.vue'
+
 const { data: vacanciesData } = await useAsyncData('vacancies', () =>
   $fetch('http://localhost:8000/api/vacancies/'), { server: false }
 )
-
 const latestVacancies = computed(() => (vacanciesData.value ?? []).slice(0, 3))
-
 const features = [
   {
     title: 'Стабильность занятости',
