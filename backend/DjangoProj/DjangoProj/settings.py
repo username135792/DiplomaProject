@@ -131,10 +131,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://diploma-project-k4pygafxg-vlads-projects-76ef279f.vercel.app",
+    "https://diploma-project-gamma.vercel.app",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
     "https://diploma-project-k4pygafxg-vlads-projects-76ef279f.vercel.app",
+    "https://diploma-project-gamma.vercel.app",
+]
 ]
