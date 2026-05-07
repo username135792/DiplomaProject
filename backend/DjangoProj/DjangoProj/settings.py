@@ -140,4 +140,3 @@ CSRF_TRUSTED_ORIGINS = [
     "https://diploma-project-k4pygafxg-vlads-projects-76ef279f.vercel.app",
     "https://diploma-project-gamma.vercel.app",
 ]
-]
