@@ -16,7 +16,8 @@
 <script setup>
 import VacancyCards from '~/components/VacancyCards.vue';
 
+const config = useRuntimeConfig()
 const { data: vacanciesData } = await useAsyncData('vacancies-page', () =>
-  $fetch('http://localhost:8000/api/vacancies/'), { server: false }
+  $fetch(`${config.public.apiBaseUrl}/api/vacancies/`), { server: false }
 )
 </script>

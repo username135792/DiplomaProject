@@ -120,8 +120,9 @@
 <script setup>
 import VacancyCards from '~/components/VacancyCards.vue'
 
+const config = useRuntimeConfig()
 const { data: vacanciesData } = await useAsyncData('vacancies', () =>
-  $fetch('http://localhost:8000/api/vacancies/'), { server: false }
+  $fetch(`${config.public.apiBaseUrl}/api/vacancies/`), { server: false }
 )
 const latestVacancies = computed(() => (vacanciesData.value ?? []).slice(0, 3))
 const features = [

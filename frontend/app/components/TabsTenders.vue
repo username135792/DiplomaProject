@@ -64,7 +64,7 @@ const tabItems = [
 ]
 
 const { data: allTenders } = await useAsyncData('tenders', () =>
-  $fetch('http://localhost:8000/api/tenders/'), { server: false }
+  $fetch(`${useRuntimeConfig().public.apiBaseUrl}/api/tenders/`), { server: false }
 )
 
 const filteredItems = (category) => {

@@ -131,6 +131,7 @@ import { ref } from 'vue'
 import ApplicationForm from './ApplicationForm.vue'
 
 // Reactive state
+const config = useRuntimeConfig()
 const isApplicationFormOpen = ref(false)
 const selectedVacancy = ref(null)
 
@@ -195,7 +196,7 @@ const handleFormSubmit = async (formData) => {
       }
     }
 
-    const response = await $fetch('http://localhost:8000/api/apply/', {
+    const response = await $fetch(`${config.public.apiBaseUrl}/api/apply/`, {
       method: 'POST',
       body: data
     })

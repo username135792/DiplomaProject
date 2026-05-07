@@ -1,6 +1,7 @@
 <script setup>
+const config = useRuntimeConfig()
 const { data: staffItems } = await useAsyncData('staff', () =>
-  $fetch('http://localhost:8000/api/staff/'), { server: false }
+  $fetch(`${config.public.apiBaseUrl}/api/staff/`), { server: false }
 )
 </script>
 

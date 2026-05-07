@@ -1,4 +1,17 @@
 export default defineNuxtConfig({
+  nitro: {
+    preset: 'vercel',
+    prerender: {
+      routes: ['/']
+    }
+  },
+
+  runtimeConfig: {
+    public: {
+      apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:8000'
+    }
+  },
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/image',
@@ -54,14 +67,6 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-01-15',
 
-  nitro: {
-    prerender: {
-      routes: [
-        '/'
-      ]
-    }
-  },
-
   eslint: {
     config: {
       stylistic: {
@@ -70,4 +75,5 @@ export default defineNuxtConfig({
       }
     }
   }
+  
 })

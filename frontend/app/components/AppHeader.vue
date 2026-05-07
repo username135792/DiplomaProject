@@ -3,7 +3,7 @@
     <!-- LEFT: Logo + Company Name -->
     <template #left>
       <NuxtLink to="/" class="flex items-center gap-3">
-        <img src="C:\Users\Влад\Desktop\diploma_test, nuxt+django\frontend\public\logos\surrailogo.png" class="h-8 w-auto" />
+        <NuxtImg src="/logos/surrailogo.png" class="h-8 w-auto" />
         <div class="font-semibold text-2xl tracking-tight">
           Кадровый портал
           <span class="text-sm text-gray-500 dark:text-gray-400 font-normal block -mt-1">Сургутского района</span>
