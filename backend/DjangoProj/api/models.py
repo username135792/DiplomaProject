@@ -22,12 +22,30 @@ class Tender(models.Model):
         return f'[{self.get_category_display()}] {self.name}'
 
 
+class Branch(models.Model):
+    name = models.CharField('Название', max_length=255)
+    address = models.CharField('Адрес', max_length=255)
+
+    class Meta:
+        verbose_name = 'Отделение'
+        verbose_name_plural = 'Отделения'
+
+    def __str__(self):
+        return self.name
+
+
 class StaffMember(models.Model):
-    name = models.CharField('Имя', max_length=255)
+    name = models.CharField('Имя', max_length=255, blank=True)
+    surname = models.CharField('Фамилия', max_length=255, blank=True)
+    patronym = models.CharField('Отчество', max_length=255, blank=True)
+    phone = models.CharField('Телефон', max_length=20, blank=True)
+    email = models.EmailField('Email', blank=True)
+    cabinet_number = models.CharField('Номер кабинета', max_length=50, blank=True)
     role = models.CharField('Должность', max_length=255)
+    branch = models.ForeignKey(Branch, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Отделение')
     description = models.TextField('Описание', blank=True)
     image = models.ImageField('Фото', upload_to='staff/', blank=True, null=True)
-    order = models.PositiveIntegerField('Порядок', default=0)
+    order = models.PositiveIntegerField('Порядок', default=0, unique=True)
     is_active = models.BooleanField('Активен', default=True)
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
 
@@ -37,14 +55,14 @@ class StaffMember(models.Model):
         ordering = ['order']
 
     def __str__(self):
-        return self.name
+        return f'{self.surname} {self.name} {self.patronym or ""}'.strip()
 
 
 class Vacancy(models.Model):
     # сюда идет дожность муниципальная или техническая (возможно)
     title = models.CharField('Название', max_length=255) # нет 
     # направлении профессии (внутренний фактор который не визуализируется на вакансии)
-    company = models.CharField('Компания/отдел', max_length=255) # да
+    branch = models.CharField('Отдел', max_length=255) # да
     location = models.CharField('Локация', max_length=255) # нет
     salary = models.CharField('Зарплата', max_length=255) # нет
     employment_type = models.CharField('Тип занятости', max_length=100, blank=True) # нет

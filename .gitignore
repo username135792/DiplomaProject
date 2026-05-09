@@ -23,6 +23,7 @@ backend/media/
 backend/staticfiles/
 backend/*.log
 backend/migrations/__pycache__/
+backend/DjangoProj/staticfiles
 
 # ========================================
 # Nuxt UI Frontend

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Tender, StaffMember, Vacancy, JobApplication
+from .models import Tender, StaffMember, Vacancy, JobApplication, Branch
 
 
 class TenderSerializer(serializers.ModelSerializer):
@@ -20,10 +20,13 @@ class TenderSerializer(serializers.ModelSerializer):
 
 class StaffMemberSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
+    branch_name = serializers.CharField(source='branch.name', read_only=True)
+    branch_address = serializers.CharField(source='branch.address', read_only=True)
 
     class Meta:
         model = StaffMember
-        fields = ['name', 'role', 'description', 'image']
+        fields = ['name', 'surname', 'patronym', 'phone', 'email', 'cabinet_number',
+                  'role', 'branch', 'branch_name', 'branch_address', 'description', 'image']
 
     def get_image(self, obj):
         if obj.image:
@@ -42,7 +45,7 @@ class VacancySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vacancy
-        fields = ['id', 'title', 'company', 'location', 'salary', 'employmentType',
+        fields = ['id', 'title', 'branch', 'location', 'salary', 'employmentType',
                   'experience', 'isNew', 'skills', 'detailsLink']
 
     def get_skills(self, obj):
