@@ -45,7 +45,7 @@ class StaffMember(models.Model):
     branch = models.ForeignKey(Branch, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Отделение')
     description = models.TextField('Описание', blank=True)
     image = models.ImageField('Фото', upload_to='staff/', blank=True, null=True)
-    order = models.PositiveIntegerField('Порядок', default=0, unique=True)
+    order = models.PositiveIntegerField('Порядок', default=0)
     is_active = models.BooleanField('Активен', default=True)
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
 
