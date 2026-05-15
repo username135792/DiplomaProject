@@ -6,6 +6,12 @@
       image-alt="Office workspace"
   />
 
+  <div class="flex flex-wrap gap-4 justify-center mb-8">
+    <DropdownFilters field="work_schedule" label="График работы" @change="onFilterChange" />
+    <DropdownFilters field="required_experience" label="Опыт работы" @change="onFilterChange" />
+    <DropdownFilters field="job_type" label="Тип должности" @change="onFilterChange" />
+  </div>
+
   <VacancyCards
       title="Последние вакансии"
       subtitle="Актуальные предложения от работодателей"
@@ -14,10 +20,23 @@
   </template>
 
 <script setup>
-import VacancyCards from '~/components/VacancyCards.vue';
+import VacancyCards from '~/components/VacancyCards.vue'
 
 const config = useRuntimeConfig()
-const { data: vacanciesData } = await useAsyncData('vacancies-page', () =>
-  $fetch(`${config.public.apiBaseUrl}/api/vacancies/`), { server: false }
-)
+const filters = reactive({})
+
+const { data: vacanciesData, refresh } = await useAsyncData('vacancies-page', () => {
+  const params = new URLSearchParams()
+  Object.entries(filters).forEach(([key, val]) => {
+    if (val != null) params.append(key, val)
+  })
+  const queryString = params.toString()
+  const url = `${config.public.apiBaseUrl}/api/vacancies/${queryString ? '?' + queryString : ''}`
+  return $fetch(url)
+}, { server: false })
+
+function onFilterChange({ field, value }) {
+  filters[field] = value
+  refresh()
+}
 </script>

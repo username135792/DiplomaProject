@@ -3,8 +3,10 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import Tender, Vacancy, StaffMember
-from .serializers import TenderSerializer, VacancySerializer, StaffMemberSerializer, JobApplicationSerializer
+from .models import Tender, Vacancy, StaffMember, WorkSchedule, RequiredExperience, JobType
+from .serializers import (TenderSerializer, VacancySerializer, StaffMemberSerializer,
+                          JobApplicationSerializer, WorkScheduleSerializer,
+                          RequiredExperienceSerializer, JobTypeSerializer)
 
 
 @api_view(['GET'])
@@ -22,6 +24,10 @@ def tenders(request):
 @api_view(['GET'])
 def staff_members(request):
     items = StaffMember.objects.filter(is_active=True)
+
+    if request.query_params.get('honorboard'):
+        items = items.filter(show_on_honorboard=True)
+
     serializer = StaffMemberSerializer(items, many=True, context={'request': request})
     return Response(serializer.data)
 
@@ -29,7 +35,38 @@ def staff_members(request):
 @api_view(['GET'])
 def vacancies(request):
     items = Vacancy.objects.filter(is_active=True)
+
+    work_schedule = request.query_params.get('work_schedule')
+    if work_schedule:
+        items = items.filter(work_schedule_id=work_schedule)
+
+    required_experience = request.query_params.get('required_experience')
+    if required_experience:
+        items = items.filter(required_experience_id=required_experience)
+
+    job_type = request.query_params.get('job_type')
+    if job_type:
+        items = items.filter(job_type_id=job_type)
+
     serializer = VacancySerializer(items, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def vacancy_filters(request, field_name):
+    model_map = {
+        'work_schedule': (WorkSchedule, WorkScheduleSerializer),
+        'required_experience': (RequiredExperience, RequiredExperienceSerializer),
+        'job_type': (JobType, JobTypeSerializer),
+    }
+
+    entry = model_map.get(field_name)
+    if entry is None:
+        return Response({'error': f'Unknown filter field: {field_name}'}, status=404)
+
+    model_cls, serializer_cls = entry
+    items = model_cls.objects.all()
+    serializer = serializer_cls(items, many=True)
     return Response(serializer.data)
 
 

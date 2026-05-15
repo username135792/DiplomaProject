@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Tender, StaffMember, Vacancy, JobApplication, Branch
+from .models import Tender, StaffMember, Vacancy, JobApplication, Branch, WorkSchedule, RequiredExperience, JobType
 
 
 class TenderSerializer(serializers.ModelSerializer):
@@ -37,16 +37,38 @@ class StaffMemberSerializer(serializers.ModelSerializer):
         return None
 
 
+class WorkScheduleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WorkSchedule
+        fields = ['id', 'name']
+
+
+class RequiredExperienceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RequiredExperience
+        fields = ['id', 'name']
+
+
+class JobTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobType
+        fields = ['id', 'name']
+
+
 class VacancySerializer(serializers.ModelSerializer):
     employmentType = serializers.CharField(source='employment_type')
     isNew = serializers.BooleanField(source='is_new')
+    workSchedule = serializers.CharField(source='work_schedule.name', read_only=True)
+    requiredExperience = serializers.CharField(source='required_experience.name', read_only=True)
+    jobType = serializers.CharField(source='job_type.name', read_only=True)
     skills = serializers.SerializerMethodField()
     detailsLink = serializers.SerializerMethodField()
 
     class Meta:
         model = Vacancy
         fields = ['id', 'title', 'branch', 'location', 'salary', 'employmentType',
-                  'experience', 'isNew', 'skills', 'detailsLink']
+                  'experience', 'workSchedule', 'requiredExperience', 'jobType',
+                  'isNew', 'skills', 'detailsLink']
 
     def get_skills(self, obj):
         return [s.strip() for s in obj.skills.split('\n') if s.strip()]

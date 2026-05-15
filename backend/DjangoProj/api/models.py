@@ -47,6 +47,7 @@ class StaffMember(models.Model):
     image = models.ImageField('Фото', upload_to='staff/', blank=True, null=True)
     order = models.PositiveIntegerField('Порядок', default=0)
     is_active = models.BooleanField('Активен', default=True)
+    show_on_honorboard = models.BooleanField('Показывать на доске почёта', default=True)
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
 
     class Meta:
@@ -58,15 +59,51 @@ class StaffMember(models.Model):
         return f'{self.surname} {self.name} {self.patronym or ""}'.strip()
 
 
+class WorkSchedule(models.Model):
+    name = models.CharField('Название', max_length=100)
+
+    class Meta:
+        verbose_name = 'График работы'
+        verbose_name_plural = 'Графики работы'
+
+    def __str__(self):
+        return self.name
+
+
+class RequiredExperience(models.Model):
+    name = models.CharField('Название', max_length=100)
+
+    class Meta:
+        verbose_name = 'Требуемый опыт'
+        verbose_name_plural = 'Требуемый опыт'
+
+    def __str__(self):
+        return self.name
+
+
+class JobType(models.Model):
+    name = models.CharField('Название', max_length=100)
+
+    class Meta:
+        verbose_name = 'Тип должности'
+        verbose_name_plural = 'Типы должностей'
+
+    def __str__(self):
+        return self.name
+
+
 class Vacancy(models.Model):
     # сюда идет дожность муниципальная или техническая (возможно)
     title = models.CharField('Название', max_length=255) # нет 
     # направлении профессии (внутренний фактор который не визуализируется на вакансии)
-    branch = models.CharField('Отдел', max_length=255) # да
+    branch = models.CharField('Отдел', max_length=255, blank=True) # да
     location = models.CharField('Локация', max_length=255) # нет
     salary = models.CharField('Зарплата', max_length=255) # нет
     employment_type = models.CharField('Тип занятости', max_length=100, blank=True) # нет
     experience = models.CharField('Опыт', max_length=100, blank=True) # потом возможно
+    work_schedule = models.ForeignKey(WorkSchedule, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='График работы')
+    required_experience = models.ForeignKey(RequiredExperience, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Требуемый опыт')
+    job_type = models.ForeignKey(JobType, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Тип должности')
     is_new = models.BooleanField('Новая вакансия', default=False) # нет
     skills = models.TextField('Навыки', blank=True, help_text='Каждый навык с новой строки') # возможно
     is_active = models.BooleanField('Активна', default=True) # отлетает

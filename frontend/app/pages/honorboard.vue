@@ -1,7 +1,7 @@
 <script setup>
 const config = useRuntimeConfig()
 const { data: staffItems } = await useAsyncData('staff', () =>
-  $fetch(`${config.public.apiBaseUrl}/api/staff/`), { server: false }
+  $fetch(`${config.public.apiBaseUrl}/api/staff/?honorboard=true`), { server: false }
 )
 </script>
 <template>

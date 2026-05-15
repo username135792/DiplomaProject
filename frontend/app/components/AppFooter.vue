@@ -9,7 +9,8 @@ const columns: FooterColumn[] = [
       { label: 'О нас', to: '/about' },
       { label: 'Вакансии', to: '/vacancies' },
       { label: 'Новости', to: '/news' },
-      { label: 'Контакты', to: '/contacts' }
+      { label: 'Контакты', to: '/contacts' },
+      { label: 'Конкурсы', to: '/tenders' },
     ]
   },
   {
@@ -18,7 +19,7 @@ const columns: FooterColumn[] = [
       { label: 'ФСС России', to: 'https://lk.fss.ru/', target: '_blank' },
       { label: 'Минтруд России', to: 'https://mintrud.gov.ru', target: '_blank' },
       { label: 'Администрация Сургутского района', to: 'https://admsr.ru', target: '_blank' },
-      { label: 'Администрация г. Сургута', to: 'https://admsurgut.ru', target: '_blank' }
+      { label: 'Администрация г. Сургута', to: 'https://depgs.admhmao.ru', target: '_blank' }
     ]
   },
   {
