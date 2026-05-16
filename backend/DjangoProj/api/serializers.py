@@ -63,18 +63,19 @@ class VacancySerializer(serializers.ModelSerializer):
     jobType = serializers.CharField(source='job_type.name', read_only=True)
     skills = serializers.SerializerMethodField()
     detailsLink = serializers.SerializerMethodField()
+    workingHours = serializers.CharField(source='working_hours.name', read_only=True, allow_null=True)
 
     class Meta:
         model = Vacancy
         fields = ['id', 'title', 'branch', 'location', 'salary', 'employmentType',
                   'experience', 'workSchedule', 'requiredExperience', 'jobType',
-                  'isNew', 'skills', 'detailsLink']
+                  'isNew', 'description', 'skills', 'workingHours', 'detailsLink', 'created_at']
 
     def get_skills(self, obj):
         return [s.strip() for s in obj.skills.split('\n') if s.strip()]
 
     def get_detailsLink(self, obj):
-        return f'/vacancies/{obj.id}'
+        return f'/vacancyinfo/{obj.id}'
 
 
 class JobApplicationSerializer(serializers.ModelSerializer):

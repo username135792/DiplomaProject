@@ -22,7 +22,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['change'])
-
 const config = useRuntimeConfig()
 const isOpen = ref(false)
 const selectedItem = ref(null)

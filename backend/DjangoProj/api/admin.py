@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Tender, StaffMember, Vacancy, JobApplication, Branch, WorkSchedule, RequiredExperience, JobType
+from .models import Tender, StaffMember, Vacancy, JobApplication, Branch, WorkSchedule, RequiredExperience, JobType, WorkingHours
 
 
 @admin.register(Branch)
@@ -31,8 +31,8 @@ class VacancyAdmin(admin.ModelAdmin):
     list_editable = ['is_active', 'is_new']
     fieldsets = [
         ('Основное', {'fields': ['title', 'branch', 'location', 'salary']}),
-        ('Детали', {'fields': ['employment_type', 'experience', 'work_schedule', 'required_experience', 'job_type', 'is_new', 'is_active']}),
-        ('Навыки', {'fields': ['skills']}),
+        ('Детали', {'fields': ['employment_type', 'experience', 'work_schedule', 'required_experience', 'job_type', 'working_hours', 'is_new', 'is_active']}),
+        ('Описание и навыки', {'fields': ['description', 'skills']}),
     ]
 
 
@@ -50,6 +50,12 @@ class RequiredExperienceAdmin(admin.ModelAdmin):
 
 @admin.register(JobType)
 class JobTypeAdmin(admin.ModelAdmin):
+    list_display = ['name']
+    search_fields = ['name']
+
+
+@admin.register(WorkingHours)
+class WorkingHoursAdmin(admin.ModelAdmin):
     list_display = ['name']
     search_fields = ['name']
 

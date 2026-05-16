@@ -73,20 +73,10 @@
       />
     </UPageGrid>
   </UContainer>
-    <VacancyCards
+    <VacancyCarousel
       title="Последние вакансии"
       subtitle="Актуальные предложения от работодателей"
-      :vacancies="latestVacancies"
-    />
-
-    <Button
-      label="Доска почета"
-      to="/vacancies"
-      color="primary"
-      variant="solid"
-      size="lg"
-      trailing-icon="i-lucide-arrow-right"
-      class="flex justify-center mt-6 bg-primary-500 text-gray-900 dark:text-white hover:bg-primary-600"
+      :vacancies="vacanciesData ?? []"
     />
 
   <UContainer class="py-6 lg:py-12">
@@ -118,13 +108,12 @@
 </template>
 
 <script setup>
-import VacancyCards from '~/components/VacancyCards.vue'
+import VacancyCarousel from '~/components/VacancyCarousel.vue'
 
 const config = useRuntimeConfig()
 const { data: vacanciesData } = await useAsyncData('vacancies', () =>
   $fetch(`${config.public.apiBaseUrl}/api/vacancies/`), { server: false }
 )
-const latestVacancies = computed(() => (vacanciesData.value ?? []).slice(0, 3))
 const features = [
   {
     title: 'Стабильность занятости',

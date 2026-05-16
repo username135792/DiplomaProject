@@ -2,6 +2,7 @@ from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status
+from django.shortcuts import get_object_or_404
 
 from .models import Tender, Vacancy, StaffMember, WorkSchedule, RequiredExperience, JobType
 from .serializers import (TenderSerializer, VacancySerializer, StaffMemberSerializer,
@@ -49,6 +50,13 @@ def vacancies(request):
         items = items.filter(job_type_id=job_type)
 
     serializer = VacancySerializer(items, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def vacancy_detail(request, pk):
+    vacancy = get_object_or_404(Vacancy, pk=pk, is_active=True)
+    serializer = VacancySerializer(vacancy)
     return Response(serializer.data)
 
 

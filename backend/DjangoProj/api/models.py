@@ -92,6 +92,17 @@ class JobType(models.Model):
         return self.name
 
 
+class WorkingHours(models.Model):
+    name = models.CharField('Название', max_length=100)
+
+    class Meta:
+        verbose_name = 'Режим работы'
+        verbose_name_plural = 'Режимы работы'
+
+    def __str__(self):
+        return self.name
+
+
 class Vacancy(models.Model):
     # сюда идет дожность муниципальная или техническая (возможно)
     title = models.CharField('Название', max_length=255) # нет 
@@ -105,7 +116,9 @@ class Vacancy(models.Model):
     required_experience = models.ForeignKey(RequiredExperience, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Требуемый опыт')
     job_type = models.ForeignKey(JobType, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Тип должности')
     is_new = models.BooleanField('Новая вакансия', default=False) # нет
+    description = models.TextField('Описание', blank=True)
     skills = models.TextField('Навыки', blank=True, help_text='Каждый навык с новой строки') # возможно
+    working_hours = models.ForeignKey(WorkingHours, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Режим работы')
     is_active = models.BooleanField('Активна', default=True) # отлетает
     created_at = models.DateTimeField('Дата создания', auto_now_add=True) # отлетает
 
